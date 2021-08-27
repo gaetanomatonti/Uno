@@ -6,23 +6,25 @@ import Crypto
 
 import Foundation
 
-public struct Generator {
-  /// Generates a one-time password (OTP) from a secret payload and counter.
+/// An object that handles the generation of One-Time Passwords.
+/// - Note: This currently supports the generation of HOTPs (HMAC-based OTP) via SHA1.
+struct OneTimePasswordGenerator {
+  /// Generates a HMAC-based One-Time Password (HOTP) from a secret and moving factor.
   /// - Parameters:
-  ///   - secret: The secret to feed into the generator.
-  ///   - counter: The counter to feed into the generator.
+  ///   - secret: A static value that acts as a seed for the generator.
+  ///   - counter: A variable number that acts as a seed for the generator.
   ///   - numberOfDigits: The number of digits composing the one-time password.
   /// - Returns: A `String` representing the generated one-time password.
-  public static func generateOTP(secret: Data, counter: UInt64, numberOfDigits: Int) -> String {
+  static func generateHOTP(secret: Data, counter: UInt64, numberOfDigits: Int) -> String {
     let hash = generateHMACHash(secret: secret, counter: counter)
     let code = hash.dynamicallyTrimmed(numberOfDigits: numberOfDigits)
     return code
   }
   
-  /// Generates the HMAC hash from a secret payload and a counter.
+  /// Generates the HMAC hash from a secret payload and a moving factor.
   /// - Parameters:
-  ///   - secret: The secret to feed into the hasher.
-  ///   - counter: The counter to feed into the hasher.
+  ///   - secret: A static value that acts as a seed for the generator.
+  ///   - counter: A variable number that acts as a seed for the generator.
   /// - Returns: A `MessageAuthenticationCode` representing the generated hash.
   static func generateHMACHash(secret: Data, counter: UInt64) -> some MessageAuthenticationCode {
     var counter = counter.bigEndian

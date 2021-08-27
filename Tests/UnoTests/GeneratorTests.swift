@@ -21,7 +21,7 @@ final class GeneratorTests: XCTestCase {
     ]
     
     for index in testHashes.indices {
-      let generatedHash = Generator.generateHMACHash(secret: secret, counter: UInt64(index))
+      let generatedHash = OneTimePasswordGenerator.generateHMACHash(secret: secret, counter: UInt64(index))
       XCTAssertEqual(generatedHash.hexString, testHashes[index])
     }
   }
@@ -41,7 +41,7 @@ final class GeneratorTests: XCTestCase {
     ]
     
     for index in trimmedHashes.indices {
-      let generatedHash = Generator.generateHMACHash(secret: secret, counter: UInt64(index))
+      let generatedHash = OneTimePasswordGenerator.generateHMACHash(secret: secret, counter: UInt64(index))
       XCTAssertEqual(generatedHash.dynamicallyTrimmedHexadecimals, trimmedHashes[index])
     }
   }
@@ -61,7 +61,7 @@ final class GeneratorTests: XCTestCase {
     ]
 
     for index in trimmedDecimals.indices {
-      let generatedHash = Generator.generateHMACHash(secret: secret, counter: UInt64(index))
+      let generatedHash = OneTimePasswordGenerator.generateHMACHash(secret: secret, counter: UInt64(index))
       XCTAssertEqual(generatedHash.dynamicallyTrimmedDecimals, trimmedDecimals[index])
     }
   }
@@ -81,7 +81,7 @@ final class GeneratorTests: XCTestCase {
     ]
     
     for index in otps.indices {
-      let generatedOTP = Generator.generateOTP(secret: secret, counter: UInt64(index), numberOfDigits: 6)
+      let generatedOTP = OneTimePasswordGenerator.generateHOTP(secret: secret, counter: UInt64(index), numberOfDigits: 6)
       XCTAssertEqual(generatedOTP, otps[index])
     }
   }

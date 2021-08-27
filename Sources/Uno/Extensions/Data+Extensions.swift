@@ -1,6 +1,6 @@
 import Foundation
 
-public extension Data {
+extension Data {
   /// An hexadecimal representation of the bytes.
   /// - Parameter forcingZeroPadding: Whether or not leading zeroes should be added to the string.
   /// - Returns: A `String` representing the bytes sequence in hexadecimal format.
