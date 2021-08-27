@@ -2,7 +2,7 @@ import XCTest
 @testable import Uno
 
 /// Test case for the OTP `Generator` object.
-/// - Note: Test data set from [RFC-4226](https://datatracker.ietf.org/doc/html/rfc4226) specifications.
+/// - Note: Test data set from page 31 of the [RFC-4226](https://datatracker.ietf.org/doc/html/rfc4226) specifications.
 final class GeneratorTests: XCTestCase {
   private let secret = "12345678901234567890".data(using: .ascii)!
   
@@ -42,7 +42,7 @@ final class GeneratorTests: XCTestCase {
     
     for index in trimmedHashes.indices {
       let generatedHash = Generator.generateHMACHash(secret: secret, counter: UInt64(index))
-      XCTAssertEqual(generatedHash.dynamicallyTrimmedHash.hexString(enablePadding: false), trimmedHashes[index])
+      XCTAssertEqual(generatedHash.dynamicallyTrimmedHexadecimals, trimmedHashes[index])
     }
   }
   
@@ -62,7 +62,7 @@ final class GeneratorTests: XCTestCase {
 
     for index in trimmedDecimals.indices {
       let generatedHash = Generator.generateHMACHash(secret: secret, counter: UInt64(index))
-      XCTAssertEqual(generatedHash.trimmedDecimals, trimmedDecimals[index])
+      XCTAssertEqual(generatedHash.dynamicallyTrimmedDecimals, trimmedDecimals[index])
     }
   }
   
@@ -81,7 +81,7 @@ final class GeneratorTests: XCTestCase {
     ]
     
     for index in otps.indices {
-      let generatedOTP = Generator.generateOTP(secret: secret, digitsCount: 6, counter: UInt64(index))
+      let generatedOTP = Generator.generateOTP(secret: secret, counter: UInt64(index), numberOfDigits: 6)
       XCTAssertEqual(generatedOTP, otps[index])
     }
   }

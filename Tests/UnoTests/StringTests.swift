@@ -2,7 +2,7 @@ import XCTest
 @testable import Uno
 
 final class StringTests: XCTestCase {
-  func testIntegerFormat() {
+  func testAuthenticationCodeFormatting() {
     let testNumbers = [
       0,
       1,
@@ -25,7 +25,7 @@ final class StringTests: XCTestCase {
     
     for index in testNumbers.indices {
       let code = testNumbers[index]
-      let formattedCode = String.formatCode(code: UInt64(code), numberOfDigits: 6)
+      let formattedCode = String.formatAuthenticationCode(UInt64(code), numberOfDigits: 6)
       XCTAssertEqual(formattedCode, expectedResults[index])
     }
   }
