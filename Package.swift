@@ -23,7 +23,7 @@ let package = Package(
     .target(
       name: "Uno",
       dependencies: [
-        .productItem(name: "Crypto", package: "swift-crypto", condition: .when(platforms: [.windows, .linux]))
+        .product(name: "Crypto", package: "swift-crypto")
       ]
     ),
     .testTarget(
