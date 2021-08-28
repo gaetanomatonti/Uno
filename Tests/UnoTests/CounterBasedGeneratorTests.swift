@@ -7,30 +7,30 @@
 import XCTest
 @testable import Uno
 
-/// Test case for the `HOTP` type.
+/// Test case for the `CounterBasedGenerator`.
 /// - Note: Test data set from [page 31](https://datatracker.ietf.org/doc/html/rfc4226#page-31) of the
 /// [RFC-4226](https://datatracker.ietf.org/doc/html/rfc4226) specifications.
-final class HOTPTests: XCTestCase {
+final class CounterBasedGeneratorTests: XCTestCase {
   
   // MARK: - Stored Properties
   
   /// The secret to use for tests.
   private var secret: Secret!
   
-  /// The `HOTP` under test.
-  private var hotp: HOTP!
+  /// The `CounterBasedGenerator` under test.
+  private var sut: CounterBasedGenerator!
   
   // MARK: - Test Case Functions
   
   override func setUpWithError() throws {
     secret = try Secret(ascii: "12345678901234567890")
-    hotp = HOTP(secret: secret)
+    sut = CounterBasedGenerator(secret: secret)
   }
   
   // MARK: - Tests
   
   func testCodeGenerationShouldThrow() {
-    let hotp = HOTP(secret: secret, codeLength: 4)
+    let hotp = CounterBasedGenerator(secret: secret, codeLength: 4)
     XCTAssertThrowsError(try hotp.generate(from: 0))
   }
   
@@ -49,7 +49,7 @@ final class HOTPTests: XCTestCase {
     ]
     
     for index in testHashes.indices {
-      let generatedHash = try hotp.generateHMACHash(from: UInt64(index))
+      let generatedHash = try sut.generateHMACHash(from: UInt64(index))
       XCTAssertEqual(generatedHash.hexString, testHashes[index])
     }
   }
@@ -69,7 +69,7 @@ final class HOTPTests: XCTestCase {
     ]
     
     for index in trimmedHashes.indices {
-      let generatedHash = try hotp.generateHMACHash(from: UInt64(index))
+      let generatedHash = try sut.generateHMACHash(from: UInt64(index))
       XCTAssertEqual(generatedHash.dynamicallyTrimmedHexadecimals, trimmedHashes[index])
     }
   }
@@ -89,7 +89,7 @@ final class HOTPTests: XCTestCase {
     ]
 
     for index in trimmedDecimals.indices {
-      let generatedHash = try hotp.generateHMACHash(from: UInt64(index))
+      let generatedHash = try sut.generateHMACHash(from: UInt64(index))
       XCTAssertEqual(generatedHash.dynamicallyTrimmedDecimals, trimmedDecimals[index])
     }
   }
@@ -109,7 +109,7 @@ final class HOTPTests: XCTestCase {
     ]
     
     for index in otps.indices {
-      let generatedOTP = try hotp.generate(from: UInt64(index))
+      let generatedOTP = try sut.generate(from: UInt64(index))
       XCTAssertEqual(generatedOTP, otps[index])
     }
   }
