@@ -1,5 +1,4 @@
 //
-//  OneTimePasswordGenerator.swift
 //  Uno
 //
 //  Created by Gaetano Matonti on 27/08/21.

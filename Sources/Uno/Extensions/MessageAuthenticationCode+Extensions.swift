@@ -1,5 +1,4 @@
 //
-//  MessageAuthenticationCode+Extensions.swift
 //  Uno
 //
 //  Created by Gaetano Matonti on 27/08/21.
@@ -28,7 +27,7 @@ extension MessageAuthenticationCode {
   var dynamicallyTrimmedHash: Data {
     let data = Data(self)
     let lastByte = data.last ?? 0x00
-    // Get the last 4 bit of the packet.
+    // Get the last 4 bits of the packet.
     let startIndex = Int(lastByte & 0x0f)
     // Get the end index needed for a 32 bit stride.
     let endIndex = startIndex + 3
