@@ -1,10 +1,22 @@
+//
+//  GeneratorTests.swift
+//  Uno
+//
+//  Created by Gaetano Matonti on 27/08/21.
+//
+
 import XCTest
 @testable import Uno
 
 /// Test case for the OTP `Generator` object.
 /// - Note: Test data set from page 31 of the [RFC-4226](https://datatracker.ietf.org/doc/html/rfc4226) specifications.
 final class GeneratorTests: XCTestCase {
-  private let secret = "12345678901234567890".data(using: .ascii)!
+  /// The secret to use for tests.
+  private var secret: Secret!
+  
+  override func setUpWithError() throws {
+    secret = try Secret(ascii: "12345678901234567890")
+  }
   
   func testHMAC_SHA1_Hashes() {
     let testHashes = [
