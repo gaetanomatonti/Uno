@@ -7,8 +7,12 @@
 import XCTest
 @testable import Uno
 
+/// Test case for the `String` type extensions.
 final class StringTests: XCTestCase {
-  func testAuthenticationCodeFormatting() {
+  
+  // MARK: - Tests
+  
+  func testAuthenticationCodeShouldBeFormattedCorrectly() {
     let testNumbers = [
       0,
       1,

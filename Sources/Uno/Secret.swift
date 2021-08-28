@@ -4,6 +4,12 @@
 //  Created by Gaetano Matonti on 28/08/21.
 //
 
+#if canImport(CryptoKit)
+import CryptoKit
+#else
+import Crypto
+#endif
+
 import Foundation
 
 /// An object containing information for a one-time password hash secret.
@@ -13,6 +19,13 @@ public struct Secret {
   
   /// The bytes of the secret.
   let data: Data
+  
+  // MARK: - Computed Properties
+  
+  /// The symmetric cryptographic key enclosing the secret.
+  var symmetricKey: SymmetricKey {
+    SymmetricKey(data: data)
+  }
   
   // MARK: - Init
   

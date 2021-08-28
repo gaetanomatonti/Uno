@@ -7,17 +7,33 @@
 import XCTest
 @testable import Uno
 
-/// Test case for the OTP `Generator` object.
+/// Test case for the `HOTP` type.
 /// - Note: Test data set from page 31 of the [RFC-4226](https://datatracker.ietf.org/doc/html/rfc4226) specifications.
-final class GeneratorTests: XCTestCase {
+final class HOTPTests: XCTestCase {
+  
+  // MARK: - Stored Properties
+  
   /// The secret to use for tests.
   private var secret: Secret!
   
+  /// The `HOTP` under test.
+  private var hotp: HOTP!
+  
+  // MARK: - Test Case Functions
+  
   override func setUpWithError() throws {
     secret = try Secret(ascii: "12345678901234567890")
+    hotp = HOTP(secret: secret)
   }
   
-  func testHMAC_SHA1_Hashes() {
+  // MARK: - Tests
+  
+  func testCodeGenerationShouldThrow() {
+    let hotp = HOTP(secret: secret, codeLength: 4)
+    XCTAssertThrowsError(try hotp.generate(from: 0))
+  }
+  
+  func testGeneratedHashesShouldBeCorrect() throws {
     let testHashes = [
       "cc93cf18508d94934c64b65d8ba7667fb7cde4b0",
       "75a48a19d4cbe100644e8ac1397eea747a2d33ab",
@@ -32,12 +48,12 @@ final class GeneratorTests: XCTestCase {
     ]
     
     for index in testHashes.indices {
-      let generatedHash = OneTimePasswordGenerator.generateHMACHash(secret: secret, counter: UInt64(index))
+      let generatedHash = try hotp.generateHMACHash(from: UInt64(index))
       XCTAssertEqual(generatedHash.hexString, testHashes[index])
     }
   }
   
-  func testHMAC_SHA1_TrimmedHashes() {
+  func testGeneratedTrimmedHashesShouldBeCorrect() throws {
     let trimmedHashes = [
       "4c93cf18",
       "41397eea",
@@ -52,12 +68,12 @@ final class GeneratorTests: XCTestCase {
     ]
     
     for index in trimmedHashes.indices {
-      let generatedHash = OneTimePasswordGenerator.generateHMACHash(secret: secret, counter: UInt64(index))
+      let generatedHash = try hotp.generateHMACHash(from: UInt64(index))
       XCTAssertEqual(generatedHash.dynamicallyTrimmedHexadecimals, trimmedHashes[index])
     }
   }
   
-  func testHMAC_SHA1_TrimmedDecimals() {
+  func testGeneratedTrimmedDecimalsShouldBeCorrect() throws {
     let trimmedDecimals: [UInt64] = [
       1284755224,
       1094287082,
@@ -72,12 +88,12 @@ final class GeneratorTests: XCTestCase {
     ]
 
     for index in trimmedDecimals.indices {
-      let generatedHash = OneTimePasswordGenerator.generateHMACHash(secret: secret, counter: UInt64(index))
+      let generatedHash = try hotp.generateHMACHash(from: UInt64(index))
       XCTAssertEqual(generatedHash.dynamicallyTrimmedDecimals, trimmedDecimals[index])
     }
   }
   
-  func testHMAC_SHA1_OTPs() {
+  func testGeneratedOTPsShouldBeCorrect() throws {
     let otps = [
       "755224",
       "287082",
@@ -92,7 +108,7 @@ final class GeneratorTests: XCTestCase {
     ]
     
     for index in otps.indices {
-      let generatedOTP = OneTimePasswordGenerator.generateHOTP(secret: secret, counter: UInt64(index), numberOfDigits: 6)
+      let generatedOTP = try hotp.generate(from: UInt64(index))
       XCTAssertEqual(generatedOTP, otps[index])
     }
   }
