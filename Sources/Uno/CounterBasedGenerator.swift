@@ -14,7 +14,7 @@ import Foundation
 
 /// A type that represents an HMAC-based one-time password.
 public struct CounterBasedGenerator: AuthenticationCodeGenerator {
-  /// The possible errors regarding an `HOTP`.
+  /// The possible errors thrown in `CounterBasedGenerator`.
   public enum Error: Swift.Error {
     /// The length of the authentication code is not supported.
     case codeLengthNotSupported
