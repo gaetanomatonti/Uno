@@ -31,7 +31,7 @@ public struct Secret {
   
   /// Creates an instance of `Secret` from an ASCII encoded String.
   /// - Parameter ascii: The ASCII encoded String.
-  init(ascii string: String) throws {
+  public init(ascii string: String) throws {
     guard let data = string.data(using: .ascii) else {
       throw Error.asciiConversionToDataFailed
     }

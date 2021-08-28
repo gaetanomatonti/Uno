@@ -8,7 +8,8 @@ import XCTest
 @testable import Uno
 
 /// Test case for the `HOTP` type.
-/// - Note: Test data set from page 31 of the [RFC-4226](https://datatracker.ietf.org/doc/html/rfc4226) specifications.
+/// - Note: Test data set from [page 31](https://datatracker.ietf.org/doc/html/rfc4226#page-31) of the
+/// [RFC-4226](https://datatracker.ietf.org/doc/html/rfc4226) specifications.
 final class HOTPTests: XCTestCase {
   
   // MARK: - Stored Properties

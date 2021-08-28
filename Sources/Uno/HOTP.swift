@@ -15,7 +15,7 @@ import Foundation
 /// A type that represents an HMAC-based one-time password.
 public struct HOTP: OTP {
   /// The possible errors regarding an `HOTP`.
-  enum Error: Swift.Error {
+  public enum Error: Swift.Error {
     /// The length of the authentication code is not supported.
     case codeLengthNotSupported
   }
