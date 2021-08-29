@@ -1,7 +1,15 @@
-.DS_Store
-/.build
-/Packages
-/*.xcodeproj
-xcuserdata/
+# Created by https://www.toptal.com/developers/gitignore/api/swiftpm,code
+# Edit at https://www.toptal.com/developers/gitignore?templates=swiftpm,code
+
+#!! ERROR: code is undefined. Use list command to see defined gitignore types !!#
+
+### SwiftPM ###
+Packages
+.build/
+xcuserdata
 DerivedData/
+*.xcodeproj
 .swiftpm
+
+
+# End of https://www.toptal.com/developers/gitignore/api/swiftpm,code
