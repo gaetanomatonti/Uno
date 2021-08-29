@@ -29,7 +29,7 @@ extension Algorithm {
   var minimumKeySize: Int {
     switch self {
       case .sha1:
-        return 16
+        return 20
         
       case .sha256:
         return 32
