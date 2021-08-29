@@ -49,7 +49,7 @@ final class CounterBasedGeneratorTests: XCTestCase {
     ]
     
     for index in testHashes.indices {
-      let generatedHash = try sut.generateHMACHash(from: UInt64(index))
+      let generatedHash = try sut.generateHMAC(from: UInt64(index))
       XCTAssertEqual(generatedHash.hexString, testHashes[index])
     }
   }
@@ -69,7 +69,7 @@ final class CounterBasedGeneratorTests: XCTestCase {
     ]
     
     for index in trimmedHashes.indices {
-      let generatedHash = try sut.generateHMACHash(from: UInt64(index))
+      let generatedHash = try sut.generateHMAC(from: UInt64(index))
       XCTAssertEqual(generatedHash.dynamicallyTrimmedHexadecimals, trimmedHashes[index])
     }
   }
@@ -89,7 +89,7 @@ final class CounterBasedGeneratorTests: XCTestCase {
     ]
 
     for index in trimmedDecimals.indices {
-      let generatedHash = try sut.generateHMACHash(from: UInt64(index))
+      let generatedHash = try sut.generateHMAC(from: UInt64(index))
       XCTAssertEqual(generatedHash.dynamicallyTrimmedDecimals, trimmedDecimals[index])
     }
   }

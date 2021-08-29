@@ -13,6 +13,9 @@ public protocol AuthenticationCodeGenerator {
   
   /// The amount of digits composing the authentication code.
   var codeLength: Int { get }
+  
+  /// The hash function used to generate the authentication code's hash.
+  var algorithm: Algorithm { get }
 }
 
 // MARK: - Helper Functions
