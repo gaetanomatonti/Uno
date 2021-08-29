@@ -3,10 +3,10 @@
 A simple OTP generator written in Swift.
 
 ## One-Time Password
-An OTP (One-Time Password) is an authentication code that can only be used once. As such, it is often used in combination with regular password to provide an extra layer of security (multi-factor authentication).
+An OTP (One-Time Password) is an authentication code that can only be used once. As such, it is often used in combination with a regular password to provide an extra layer of security (multi-factor authentication).
  
 ### HMAC-based One-Time Password
-An HOTP (where the "H" stands for _Hash-based Message Authentication Code_, or _HMAC_) is a one-time password generated from a cryptographic hash function and a static secret key. It also involves a moving factor that seeds into the generator function, usually a counter. 
+A HOTP (where the "H" stands for _Hash-based Message Authentication Code_, or _HMAC_) is a one-time password generated from a cryptographic hash function and a static secret key. It also involves a moving factor that seeds into the generator function, usually a counter. 
 Implementation follows the [RFC-4226](https://datatracker.ietf.org/doc/html/rfc4226) specifications.
 
 ### Time-based One-Time Password
