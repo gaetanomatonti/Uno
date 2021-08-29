@@ -63,8 +63,8 @@ extension TimeBasedGenerator {
       throw Error.timeInvalid
     }
     
-    let counter = try counter(from: secondsSince1970)
-    return try counterBasedGenerator.generate(from: counter)
+    let counterFromSeconds = try counter(from: secondsSince1970)
+    return try counterBasedGenerator.generate(from: counterFromSeconds)
   }
   
   /// Computes the counter factor from the seconds interval.
