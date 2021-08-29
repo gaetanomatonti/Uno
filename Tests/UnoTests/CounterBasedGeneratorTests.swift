@@ -90,7 +90,7 @@ final class CounterBasedGeneratorTests: XCTestCase {
 
     for index in trimmedDecimals.indices {
       let generatedHash = try sut.generateHMAC(from: UInt64(index))
-      XCTAssertEqual(generatedHash.dynamicallyTrimmedDecimals, trimmedDecimals[index])
+      XCTAssertEqual(generatedHash.dynamicallyTrimmedHash, trimmedDecimals[index])
     }
   }
   

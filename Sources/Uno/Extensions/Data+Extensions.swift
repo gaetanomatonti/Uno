@@ -7,33 +7,33 @@
 import Foundation
 
 extension Data {
-  /// The dynamically trimmed hash in decimal format.
-  var dynamicallyTrimmedDecimals: UInt64 {
-    UInt64(dynamicallyTrimmedHexadecimals, radix: 16) ?? 0
-  }
-  
   /// The dynamically trimmed hash in hexadecimal format.
   var dynamicallyTrimmedHexadecimals: String {
-    dynamicallyTrimmedHash.hexString(forcingZeroPadding: false)
+    String(dynamicallyTrimmedHash, radix: 16)
   }
 
   /// The dynamically trimmed hash bytes.
-  var dynamicallyTrimmedHash: Data {
+  var dynamicallyTrimmedHash: UInt64 {
     let lastByte = last ?? 0x00
     // Get the last 4 bits of the packet.
-    let startIndex = Int(lastByte & 0x0f)
-    // Get the end index needed for a 32 bit stride.
-    let endIndex = startIndex + 3
-    // Create a new `Data` object to prevent "offset index" errors.
-    var trimmedPacket = Data(self[startIndex...endIndex])
-    // Truncate the first bit (the packet should contain 31 bits).
-    trimmedPacket[0] &= 0x7f
-    return trimmedPacket
+    let offset = Int(lastByte & 0x0f)
+
+    var hash: UInt64 = 0
+    hash |= UInt64(self[offset] & 0x7f) << 24
+    hash |= UInt64(self[offset + 1] & 0xff) << 16
+    hash |= UInt64(self[offset + 2] & 0xff) << 8
+    hash |= UInt64(self[offset + 3] & 0xff)
+    return hash
   }
   
   /// An hexadecimal representation of the code hash.
   var hexString: String {
-    hexString()
+    hexadecimals.joined()
+  }
+  
+  /// An array of the bytes represented as hexadecimal strings.
+  var hexadecimals: [String] {
+    map { String(format: "%02hhx", $0) }
   }
       
   // MARK: - Functions
@@ -43,16 +43,8 @@ extension Data {
   /// - Returns: A `String` representing the truncated authentication code suitable for user authentication.
   func dynamicallyTrimmed(numberOfDigits: Int) -> String {
     let decimalPosition = UInt64(pow(10, Double(numberOfDigits)))
-    let code = dynamicallyTrimmedDecimals % decimalPosition
+    let code = dynamicallyTrimmedHash % decimalPosition
     
     return String.formatAuthenticationCode(code, numberOfDigits: numberOfDigits)
-  }
-
-  /// An hexadecimal representation of the bytes.
-  /// - Parameter forcingZeroPadding: Whether or not leading zeroes should be added to the string.
-  /// - Returns: A `String` representing the bytes sequence in hexadecimal format.
-  func hexString(forcingZeroPadding shouldForcePadding: Bool = true) -> String {
-    let hexDigitFormat = shouldForcePadding ? "02" : ""
-    return map { String(format: "%\(hexDigitFormat)hhx", $0) }.joined()
   }
 }
