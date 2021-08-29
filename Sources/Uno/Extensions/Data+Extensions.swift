@@ -7,12 +7,12 @@
 import Foundation
 
 extension Data {
-  /// The dynamically trimmed hash in hexadecimal format.
+  /// The hexadecimal representation of the dynamically trimmed.
   var dynamicallyTrimmedHexadecimals: String {
     String(dynamicallyTrimmedHash, radix: 16)
   }
 
-  /// The dynamically trimmed hash bytes.
+  /// The dynamically trimmed hash.
   var dynamicallyTrimmedHash: UInt64 {
     let lastByte = last ?? 0x00
     // Get the last 4 bits of the packet.
@@ -26,12 +26,12 @@ extension Data {
     return hash
   }
   
-  /// An hexadecimal representation of the code hash.
+  /// The hexadecimal representation of the data payload.
   var hexString: String {
     hexadecimals.joined()
   }
   
-  /// An array of the bytes represented as hexadecimal strings.
+  /// The array of the hexadecimal representation of the bytes.
   var hexadecimals: [String] {
     map { String(format: "%02hhx", $0) }
   }

@@ -12,7 +12,7 @@ import Crypto
 
 /// The hash function used to generate the HMAC.
 public enum Algorithm {
-  /// The SHA1 hash function. This is the most frequently used aslthough quite insecure.
+  /// The SHA1 hash function. This is the most frequently used albeit insecure.
   case sha1
   
   /// The SHA256 hash function.

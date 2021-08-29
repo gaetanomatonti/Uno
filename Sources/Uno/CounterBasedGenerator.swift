@@ -59,19 +59,19 @@ extension CounterBasedGenerator {
       throw Error.codeLengthNotSupported
     }
     
-    var counter = counter.bigEndian
-    let counterData = Data(bytes: &counter, count: MemoryLayout<UInt64>.size)
-    
     guard secret.isValid(for: algorithm) else {
       throw Algorithm.Error.invalidMinimumKeySize
     }
-    
+
+    var counter = counter.bigEndian
+    let counterData = Data(bytes: &counter, count: MemoryLayout<UInt64>.size)
+        
     return generateHMAC(from: secret.symmetricKey, data: counterData)
   }
   
   /// Generates the HMAC from a secret key and data payload.
   /// - Note: Implementation works around a limitation for protocols with associated types
-  /// by returning a `Data` instead of a more specific `MessageAuthenticationCode`.
+  /// by returning a `Data` object instead of a more specific `MessageAuthenticationCode`.
   /// This issue might be fixed in future implementations.
   /// - Parameters:
   ///   - key: The symmetric cryptographic key to use as seed.
