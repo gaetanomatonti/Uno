@@ -14,12 +14,15 @@ final class TimerBasedGeneratorTests: XCTestCase {
 
   // MARK: - Stored Properties
   
-  /// The secret to use for tests.
-  private var secret: Secret!
+  /// The secret to use for SHA1 tests.
+  private var secretSHA1: Secret!
   
-  /// The `CounterBasedGenerator` under test.
-  private var sut: TimeBasedGenerator!
+  /// The secret to use for SHA256 tests.
+  private var secretSHA256: Secret!
   
+  /// The secret to use for SHA512 tests.
+  private var secretSHA512: Secret!
+
   /// The seconds data set.
   private let testSeconds: [TimeInterval] = [
     59,
@@ -33,13 +36,16 @@ final class TimerBasedGeneratorTests: XCTestCase {
   // MARK: - Test Case Functions
   
   override func setUpWithError() throws {
-    secret = try Secret(ascii: "12345678901234567890")
-    sut = TimeBasedGenerator(secret: secret, codeLength: 8, timestep: 30)
+    secretSHA1 = try Secret(ascii: "12345678901234567890")
+    secretSHA256 = try Secret(ascii: "12345678901234567890123456789012")
+    secretSHA512 = try Secret(ascii: "1234567890123456789012345678901234567890123456789012345678901234")
   }
   
   // MARK: - Tests
   
   func testCounterConversionShouldBeCorrect() throws {
+    let sut = TimeBasedGenerator(secret: secretSHA1, codeLength: 8, timestep: 30)
+    
     let expectedResults: [UInt64] = [
       0x0000000000000001,
       0x00000000023523EC,
@@ -55,7 +61,9 @@ final class TimerBasedGeneratorTests: XCTestCase {
     }
   }
   
-  func testGeneratedOTPsShouldBeCorrect() throws {
+  func testGeneratedOTPsSHA1ShouldBeCorrect() throws {
+    let sut = TimeBasedGenerator(secret: secretSHA1, codeLength: 8, timestep: 30)
+
     let expectedResults = [
       "94287082",
       "07081804",
@@ -63,6 +71,42 @@ final class TimerBasedGeneratorTests: XCTestCase {
       "89005924",
       "69279037",
       "65353130"
+    ]
+    
+    for index in testSeconds.indices {
+      let counter = try sut.generate(from: testSeconds[index])
+      XCTAssertEqual(counter, expectedResults[index])
+    }
+  }
+    
+  func testGeneratedOTPsSHA256ShouldBeCorrect() throws {
+    let sut = TimeBasedGenerator(secret: secretSHA256, codeLength: 8, algorithm: .sha256, timestep: 30)
+
+    let expectedResults = [
+      "46119246",
+      "68084774",
+      "67062674",
+      "91819424",
+      "90698825",
+      "77737706"
+    ]
+    
+    for index in testSeconds.indices {
+      let counter = try sut.generate(from: testSeconds[index])
+      XCTAssertEqual(counter, expectedResults[index])
+    }
+  }
+  
+  func testGeneratedOTPsSHA512ShouldBeCorrect() throws {
+    let sut = TimeBasedGenerator(secret: secretSHA512, codeLength: 8, algorithm: .sha512, timestep: 30)
+
+    let expectedResults = [
+      "90693936",
+      "25091201",
+      "99943326",
+      "93441116",
+      "38618901",
+      "47863826"
     ]
     
     for index in testSeconds.indices {

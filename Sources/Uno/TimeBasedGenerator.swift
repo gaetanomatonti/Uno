@@ -44,7 +44,7 @@ public struct TimeBasedGenerator: AuthenticationCodeGenerator {
     self.codeLength = codeLength
     self.algorithm = algorithm
     self.timestep = timestep
-    self.counterBasedGenerator = CounterBasedGenerator(secret: secret, codeLength: codeLength)
+    self.counterBasedGenerator = CounterBasedGenerator(secret: secret, codeLength: codeLength, algorithm: algorithm)
   }
 }
 
