@@ -21,3 +21,31 @@ public enum Algorithm {
   /// The SHA512 hash function.
   case sha512
 }
+
+// MARK: - Helpers
+
+extension Algorithm {
+  /// The minimum size of the symmetric key in bytes.
+  var minimumKeySize: Int {
+    switch self {
+      case .sha1:
+        return 16
+        
+      case .sha256:
+        return 32
+        
+      case .sha512:
+        return 64
+    }
+  }
+}
+
+// MARK: - Errors
+
+public extension Algorithm {
+  /// The possible errors regarding the hash functions.
+  enum Error: Swift.Error {
+    /// The minimum size of the symmetric key does not match the requirement.
+    case invalidMinimumKeySize
+  }
+}

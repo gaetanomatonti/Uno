@@ -113,4 +113,9 @@ final class CounterBasedGeneratorTests: XCTestCase {
       XCTAssertEqual(generatedOTP, otps[index])
     }
   }
+  
+  func testSecretValidForSHA256ShouldThrow() throws {
+    let sut = CounterBasedGenerator(secret: secret, algorithm: .sha256)
+    XCTAssertThrowsError(try sut.generate(from: 0))
+  }
 }

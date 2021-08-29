@@ -62,6 +62,10 @@ extension CounterBasedGenerator {
     var counter = counter.bigEndian
     let counterData = Data(bytes: &counter, count: MemoryLayout<UInt64>.size)
     
+    guard secret.isValid(for: algorithm) else {
+      throw Algorithm.Error.invalidMinimumKeySize
+    }
+    
     return generateHMAC(from: secret.symmetricKey, data: counterData)
   }
   
