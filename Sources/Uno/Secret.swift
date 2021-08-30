@@ -40,7 +40,7 @@ public struct Secret {
   }
   
   /// Creates an instance of `Secret` from an ASCII encoded String.
-  /// - Parameter hex: The hexadecimal `String` representation of the secret.
+  /// - Parameter string: The hexadecimal `String` representation of the secret.
   public init(hex string: String) throws {
     self.data = try Data(hex: string)
   }
