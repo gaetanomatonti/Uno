@@ -38,6 +38,12 @@ public struct Secret {
     
     self.data = data
   }
+  
+  /// Creates an instance of `Secret` from an ASCII encoded String.
+  /// - Parameter string: The hexadecimal `String` representation of the secret.
+  public init(hex string: String) throws {
+    self.data = try Data(hex: string)
+  }
 }
 
 // MARK: - Errors
