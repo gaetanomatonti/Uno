@@ -35,6 +35,39 @@ extension Data {
   var hexadecimals: [String] {
     map { String(format: "%02hhx", $0) }
   }
+  
+  // MARK: - Init
+  
+  /// Creates a data buffer from a hexadecimal string.
+  /// - Parameter string: The hexadecimal `String` representation of the buffer.
+  init(hex string: String) throws {
+    let expectedBytesCount = string.count / 2
+    let regex = try NSRegularExpression(pattern: "[0-9a-f]{1,2}", options: .caseInsensitive)
+    
+    let range = NSRange(string.startIndex..., in: string)
+    let hexString = NSString(string: string)
+    
+    var bytes: [UInt8] = []
+    regex.enumerateMatches(in: string, range: range) { result, _, _ in
+      guard let result = result else {
+        return
+      }
+      
+      let substring = hexString.substring(with: result.range)
+      
+      guard let byte = UInt8(substring, radix: 16) else {
+        return
+      }
+      
+      bytes.append(byte)
+    }
+    
+    guard bytes.count == expectedBytesCount else {
+      throw Error.bytesCountMismatch
+    }
+    
+    self.init(bytes)
+  }
       
   // MARK: - Functions
   
@@ -46,5 +79,15 @@ extension Data {
     let code = dynamicallyTrimmedHash % decimalPosition
     
     return String.formatAuthenticationCode(code, numberOfDigits: numberOfDigits)
+  }
+}
+
+// MARK: - Errors
+
+extension Data {
+  /// The possible errors regarding the `Data` type.
+  enum Error: Swift.Error {
+    /// The count of the converted bytes doesn't match the expected byte count.
+    case bytesCountMismatch
   }
 }
