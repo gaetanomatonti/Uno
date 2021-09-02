@@ -68,7 +68,6 @@ extension Data {
     
     self.init(bytes)
   }
-      
   // MARK: - Functions
   
   /// Trims the authentication code using *dynamic truncation*.
