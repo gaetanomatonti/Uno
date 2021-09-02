@@ -39,4 +39,38 @@ final class StringTests: XCTestCase {
       XCTAssertEqual(formattedCode, expectedResults[index])
     }
   }
+  
+  func testGrouping() {
+    let string = "Hello World"
+    let expectedResult = ["Hel", "lo ", "Wor", "ld"]
+    XCTAssertEqual(string.groups(of: 3), expectedResult)
+  }
+  
+  func testBase32Decoding() throws {
+    let strings = [
+      "",
+      "MY======",
+      "MZXQ====",
+      "MZXW6===",
+      "MZXW6YQ=",
+      "MZXW6YTB",
+      "MZXW6YTBOI======"
+    ]
+    
+    let expectedResults = [
+      "",
+      "f",
+      "fo",
+      "foo",
+      "foob",
+      "fooba",
+      "foobar"
+    ]
+    
+    for index in strings.indices {
+      let data = try XCTUnwrap(strings[index].base32Decoded())
+      let resultString = try XCTUnwrap(String(data: data, encoding: .ascii))
+      XCTAssertEqual(resultString, expectedResults[index])
+    }
+  }
 }

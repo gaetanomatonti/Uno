@@ -19,4 +19,13 @@ final class DataTests: XCTestCase {
     let expectedResults: [UInt8] = [0x48, 0x65, 0x6C, 0x6C, 0x6F, 0x21, 0xDE, 0xAD, 0xBE, 0xEF]
     XCTAssertEqual(bytes, expectedResults)
   }
+  
+  func testBase32() throws {
+    let secret = "JBSWY3DPEHPK3PXP"
+    
+    let data = try XCTUnwrap(secret.base32Decoded())
+    let bytes = data.map { $0 }
+    let expectedResults: [UInt8] = [0x48, 0x65, 0x6C, 0x6C, 0x6F, 0x21, 0xDE, 0xAD, 0xBE, 0xEF]
+    XCTAssertEqual(bytes, expectedResults)
+  }
 }

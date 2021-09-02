@@ -61,3 +61,75 @@ extension Data {
     case bytesCountMismatch
   }
 }
+
+extension String {
+  private var alphabetTable: [UnicodeScalar: UInt8] {
+    [
+      "A": 0,
+      "B": 1,
+      "C": 2,
+      "D": 3,
+      "E": 4,
+      "F": 5,
+      "G": 6,
+      "H": 7,
+      "I": 8,
+      "J": 9,
+      "K": 10,
+      "L": 11,
+      "M": 12,
+      "N": 13,
+      "O": 14,
+      "P": 15,
+      "Q": 16,
+      "R": 17,
+      "S": 18,
+      "T": 19,
+      "U": 20,
+      "V": 21,
+      "W": 22,
+      "X": 23,
+      "Y": 24,
+      "Z": 25,
+      "2": 26,
+      "3": 27,
+      "4": 28,
+      "5": 29,
+      "6": 30,
+      "7": 31
+    ]
+  }
+  
+  func base32Decoded() -> Data? {
+    guard !isEmpty else {
+      return Data()
+    }
+    
+    let bytes = unicodeScalars.compactMap {
+      alphabetTable[$0]
+    }
+    
+    let binaryString = bytes.compactMap {
+      String($0, radix: 2).paddedToMatch(length: 5, with: "0")
+    }.joined()
+    
+    guard binaryString.count % 5 == 0 else {
+      return nil
+    }
+    
+    var octets = binaryString.groups(of: 8)
+    
+    let lastOctet = octets[octets.count - 1]
+    let lastOctetByte = UInt8(lastOctet, radix: 2)
+    
+    if let lastOctetByte = lastOctetByte, lastOctetByte == 0 {
+      octets.removeLast()
+    }
+    
+    let octectBytes = octets.compactMap {
+      UInt8($0, radix: 2)
+    }
+    
+    return Data(octectBytes)
+  }
+}
