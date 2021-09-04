@@ -29,6 +29,8 @@ public struct TimeBasedGenerator: AuthenticationCodeGenerator {
   
   public let codeLength: Int
   
+  public let algorithm: Algorithm
+  
   /// The period of validity of the authentication code expressed in seconds.
   public let timestep: TimeInterval
   
@@ -37,11 +39,12 @@ public struct TimeBasedGenerator: AuthenticationCodeGenerator {
   
   // MARK: - Init
   
-  public init(secret: Secret, codeLength: Int = 6, timestep: TimeInterval) {
+  public init(secret: Secret, codeLength: Int = 6, algorithm: Algorithm = .sha1, timestep: TimeInterval) {
     self.secret = secret
     self.codeLength = codeLength
+    self.algorithm = algorithm
     self.timestep = timestep
-    self.counterBasedGenerator = CounterBasedGenerator(secret: secret, codeLength: codeLength)
+    self.counterBasedGenerator = CounterBasedGenerator(secret: secret, codeLength: codeLength, algorithm: algorithm)
   }
 }
 

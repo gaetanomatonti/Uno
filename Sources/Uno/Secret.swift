@@ -46,6 +46,17 @@ public struct Secret {
   }
 }
 
+// MARK: - Helpers
+
+public extension Secret {
+  /// Checks whether the secret is valid for use with the specified algorithm.
+  /// - Parameter algorithm: The algorithm to check on.
+  /// - Returns: A `Bool` indicating whether the secret is valid.
+  func isValid(for algorithm: Algorithm) -> Bool {
+    data.count >= algorithm.minimumKeySize
+  }
+}
+
 // MARK: - Errors
 
 public extension Secret {
