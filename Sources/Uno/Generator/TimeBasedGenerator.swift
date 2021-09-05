@@ -25,11 +25,11 @@ public struct TimeBasedGenerator: AuthenticationCodeGenerator {
 
   // MARK: - Stored Properties
   
-  public let secret: Secret
+  public let secret: OneTimePassword.Secret
   
   public let codeLength: Int
   
-  public let algorithm: Algorithm
+  public let algorithm: OneTimePassword.Algorithm
   
   /// The period of validity of the authentication code expressed in seconds.
   public let timestep: TimeInterval
@@ -39,7 +39,7 @@ public struct TimeBasedGenerator: AuthenticationCodeGenerator {
   
   // MARK: - Init
   
-  public init(secret: Secret, codeLength: Int = 6, algorithm: Algorithm = .sha1, timestep: TimeInterval) {
+  public init(secret: OneTimePassword.Secret, codeLength: Int = 6, algorithm: OneTimePassword.Algorithm = .sha1, timestep: TimeInterval) {
     self.secret = secret
     self.codeLength = codeLength
     self.algorithm = algorithm

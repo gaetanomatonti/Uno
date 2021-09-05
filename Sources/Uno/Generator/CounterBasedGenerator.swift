@@ -22,15 +22,15 @@ public struct CounterBasedGenerator: AuthenticationCodeGenerator {
   
   // MARK: - Stored Properties
   
-  public let secret: Secret
+  public let secret: OneTimePassword.Secret
 
   public let codeLength: Int
   
-  public let algorithm: Algorithm
+  public let algorithm: OneTimePassword.Algorithm
 
   // MARK: - Init
   
-  public init(secret: Secret, codeLength: Int = 6, algorithm: Algorithm = .sha1) {
+  public init(secret: OneTimePassword.Secret, codeLength: Int = 6, algorithm: OneTimePassword.Algorithm = .sha1) {
     self.secret = secret
     self.codeLength = codeLength
     self.algorithm = algorithm
@@ -60,7 +60,7 @@ extension CounterBasedGenerator {
     }
     
     guard secret.isValid(for: algorithm) else {
-      throw Algorithm.Error.invalidMinimumKeySize
+      throw OneTimePassword.Algorithm.Error.invalidMinimumKeySize
     }
 
     var counter = counter.bigEndian

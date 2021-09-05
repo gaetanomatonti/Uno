@@ -15,13 +15,13 @@ final class TimerBasedGeneratorTests: XCTestCase {
   // MARK: - Stored Properties
   
   /// The secret to use for SHA1 tests.
-  private var secretSHA1: Secret!
+  private var secretSHA1: OneTimePassword.Secret!
   
   /// The secret to use for SHA256 tests.
-  private var secretSHA256: Secret!
+  private var secretSHA256: OneTimePassword.Secret!
   
   /// The secret to use for SHA512 tests.
-  private var secretSHA512: Secret!
+  private var secretSHA512: OneTimePassword.Secret!
 
   /// The seconds data set.
   private let testSeconds: [TimeInterval] = [
@@ -36,9 +36,9 @@ final class TimerBasedGeneratorTests: XCTestCase {
   // MARK: - Test Case Functions
   
   override func setUpWithError() throws {
-    secretSHA1 = try Secret(ascii: "12345678901234567890")
-    secretSHA256 = try Secret(ascii: "12345678901234567890123456789012")
-    secretSHA512 = try Secret(ascii: "1234567890123456789012345678901234567890123456789012345678901234")
+    secretSHA1 = try OneTimePassword.Secret(ascii: "12345678901234567890")
+    secretSHA256 = try OneTimePassword.Secret(ascii: "12345678901234567890123456789012")
+    secretSHA512 = try OneTimePassword.Secret(ascii: "1234567890123456789012345678901234567890123456789012345678901234")
   }
   
   // MARK: - Tests
