@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "FiveBits",
+        "repositoryURL": "https://github.com/gaetanomatonti/FiveBits.git",
+        "state": {
+          "branch": null,
+          "revision": "6135958239c3071fe8a36e04df75541b73c3a23d",
+          "version": "0.1.0"
+        }
+      },
+      {
+        "package": "swift-crypto",
+        "repositoryURL": "https://github.com/apple/swift-crypto.git",
+        "state": {
+          "branch": null,
+          "revision": "3bea268b223651c4ab7b7b9ad62ef9b2d4143eb6",
+          "version": "1.1.6"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
