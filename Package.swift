@@ -18,7 +18,7 @@ let package = Package(
   ],
   dependencies: [
     .package(url: "https://github.com/apple/swift-crypto.git", .upToNextMajor(from: "1.1.0")),
-    .package(url: "https://github.com/gaetanomatonti/FiveBits.git", .branch("feature/decoding"))
+    .package(url: "https://github.com/gaetanomatonti/FiveBits.git", .upToNextMajor(from: "0.1.0"))
   ],
   targets: [
     .target(

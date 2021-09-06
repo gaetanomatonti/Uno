@@ -5,9 +5,9 @@
         "package": "FiveBits",
         "repositoryURL": "https://github.com/gaetanomatonti/FiveBits.git",
         "state": {
-          "branch": "feature/decoding",
-          "revision": "4ebf272f481ea0357c838b6b8ebbc38870db99bd",
-          "version": null
+          "branch": null,
+          "revision": "6135958239c3071fe8a36e04df75541b73c3a23d",
+          "version": "0.1.0"
         }
       },
       {
