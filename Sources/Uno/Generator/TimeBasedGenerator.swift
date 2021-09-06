@@ -27,7 +27,7 @@ public struct TimeBasedGenerator: AuthenticationCodeGenerator {
   
   public let secret: OneTimePassword.Secret
   
-  public let codeLength: Int
+  public let codeLength: OneTimePassword.Length
   
   public let algorithm: OneTimePassword.Algorithm
   
@@ -39,7 +39,12 @@ public struct TimeBasedGenerator: AuthenticationCodeGenerator {
   
   // MARK: - Init
   
-  public init(secret: OneTimePassword.Secret, codeLength: Int = 6, algorithm: OneTimePassword.Algorithm = .sha1, timestep: TimeInterval) {
+  public init(
+    secret: OneTimePassword.Secret,
+    codeLength: OneTimePassword.Length = .six,
+    algorithm: OneTimePassword.Algorithm = .sha1,
+    timestep: TimeInterval
+  ) {
     self.secret = secret
     self.codeLength = codeLength
     self.algorithm = algorithm

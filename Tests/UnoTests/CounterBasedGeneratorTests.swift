@@ -29,11 +29,6 @@ final class CounterBasedGeneratorTests: XCTestCase {
   
   // MARK: - Tests
   
-  func testCodeGenerationShouldThrow() {
-    let hotp = CounterBasedGenerator(secret: secret, codeLength: 4)
-    XCTAssertThrowsError(try hotp.generate(from: 0))
-  }
-  
   func testGeneratedHashesShouldBeCorrect() throws {
     let testHashes = [
       "cc93cf18508d94934c64b65d8ba7667fb7cde4b0",
