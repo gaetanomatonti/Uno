@@ -2,7 +2,21 @@
 
 A simple OTP generator written in Swift.
 
-## One-Time Password
+# Installation
+Currently this package supports Swift Package Manager only. More dependency managers may be supported in future releases.
+
+## Swift Package Manger
+[Swift Package Manager](https://swift.org/package-manager/#conceptual-overview) is a tool for managing the distribution of Swift Code. It's integrated in the Swift build system and can be used to automate the dependency management.
+
+To add this package as a dependency of another Swift package you just need to add it to the `dependencies` value of your package manifest (the `Package.swift` file).
+
+```swift 
+dependencies: [
+  .package(url: "https://github.com/gaetanomatonti/Uno.git", from: "0.1.0"),
+]
+```
+
+# One-Time Password
 An OTP (One-Time Password) is an authentication code that can only be used once. As such, it is often used in combination with a regular password to provide an extra layer of security (multi-factor authentication).
  
 ### HMAC-based One-Time Password
