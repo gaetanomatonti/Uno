@@ -10,6 +10,7 @@ import CryptoKit
 import Crypto
 #endif
 
+import FiveBits
 import Foundation
 
 public extension OneTimePassword {
@@ -30,11 +31,21 @@ public extension OneTimePassword {
     
     // MARK: - Init
     
-    /// Creates an instance of `Secret` from an ASCII encoded String.
-    /// - Parameter ascii: The ASCII encoded String.
+    /// Creates an instance of `Secret` from an ASCII encoded `String`.
+    /// - Parameter ascii: The ASCII encoded `String`.
     public init(ascii string: String) throws {
       guard let data = string.data(using: .ascii) else {
         throw Error.asciiConversionToDataFailed
+      }
+      
+      self.data = data
+    }
+    
+    /// Creates an instance of `Secret` from a Base32 encoded `String`.
+    /// - Parameter base32String: The Base32 encoded `String`.
+    public init(base32Encoded base32String: String) throws {
+      guard let data = Data(base32Encoded: base32String) else {
+        throw Error.base32DecodingFailed
       }
       
       self.data = data
@@ -67,10 +78,16 @@ public extension OneTimePassword.Secret {
     /// The conversion from ASCII to data bytes failed.
     case asciiConversionToDataFailed
     
+    /// The decoding of the Base32 encoded string failed.
+    case base32DecodingFailed
+    
     public var errorDescription: String? {
       switch self {
         case .asciiConversionToDataFailed:
           return "The conversion from ASCII to data bytes failed."
+          
+        case .base32DecodingFailed:
+          return "The decoding of the Base32 string failed."
       }
     }
   }
