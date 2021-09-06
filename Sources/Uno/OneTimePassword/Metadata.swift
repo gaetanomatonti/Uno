@@ -4,6 +4,8 @@
 //  Created by Gaetano Matonti on 05/09/21.
 //
 
+import Foundation
+
 public extension OneTimePassword {
   /// An object containing the information necessary to generate an OTP to authenticate to a service.
   struct Metadata {    
@@ -21,7 +23,7 @@ public extension OneTimePassword {
     
     // MARK: - Init
     
-    /// Creates an instance of the `Metadata` object
+    /// Creates an instance of the `Metadata` object.
     /// - Parameters:
     ///   - secret: The secret to seed into the generator.
     ///   - codeLength: The amount of digits composing the authentication code.
@@ -32,6 +34,17 @@ public extension OneTimePassword {
       self.codeLength = codeLength
       self.algorithm = algorithm
       self.kind = kind
+    }
+    
+    /// Creates an instance of the `Metadata` object from a `otpauth` URI.
+    /// - Parameter uri: The `String` of the `otpauth` URI.
+    public init(uri: String) throws {
+      let parser = try URIParser(uri: uri)
+      
+      secret = parser.secret
+      codeLength = parser.digitsCount
+      algorithm = parser.algorithm
+      kind = parser.kind
     }
   }
 }

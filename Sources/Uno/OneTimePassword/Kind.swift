@@ -9,8 +9,17 @@ import Foundation
 public extension OneTimePassword {
   /// The supported types of One Time Passwords.
   enum Kind {
+    /// The key of the OTP type.
+    enum Key: String {
+      /// The key for the HOTP.
+      case hotp
+      
+      /// The key for the TOTP.
+      case totp
+    }
+    
     /// An OTP generated from a counter-based generator (HOTP).
-    case counterBased
+    case counterBased(counter: Int)
     
     /// An OTP generated from a time-based generator (TOTP).
     case timeBased(timestep: TimeInterval)
