@@ -14,23 +14,22 @@ import Foundation
 
 /// A type that represents an HMAC-based one-time password.
 public struct CounterBasedGenerator: AuthenticationCodeGenerator {
-  /// The possible errors thrown in `CounterBasedGenerator`.
-  public enum Error: Swift.Error {
-    /// The length of the authentication code is not supported.
-    case codeLengthNotSupported
-  }
   
   // MARK: - Stored Properties
   
   public let secret: OneTimePassword.Secret
 
-  public let codeLength: Int
+  public let codeLength: OneTimePassword.Length
   
   public let algorithm: OneTimePassword.Algorithm
 
   // MARK: - Init
   
-  public init(secret: OneTimePassword.Secret, codeLength: Int = 6, algorithm: OneTimePassword.Algorithm = .sha1) {
+  public init(
+    secret: OneTimePassword.Secret,
+    codeLength: OneTimePassword.Length = .six,
+    algorithm: OneTimePassword.Algorithm = .sha1
+  ) {
     self.secret = secret
     self.codeLength = codeLength
     self.algorithm = algorithm
@@ -46,7 +45,7 @@ extension CounterBasedGenerator {
   /// - Returns: A `String` representing the generated one-time password.
   public func generate(from counter: UInt64) throws -> String {
     let hmac = try generateHMAC(from: counter)
-    let code = hmac.dynamicallyTrimmed(numberOfDigits: codeLength)
+    let code = hmac.dynamicallyTrimmed(numberOfDigits: codeLength.value)
     return code
   }
   
@@ -55,10 +54,6 @@ extension CounterBasedGenerator {
   ///   - counter: A variable number that acts as a seed for the generator.
   /// - Returns: A `Data` payload representing a HMAC.
   func generateHMAC(from counter: UInt64) throws -> Data {
-    guard isCodeLengthValid else {
-      throw Error.codeLengthNotSupported
-    }
-    
     guard secret.isValid(for: algorithm) else {
       throw OneTimePassword.Algorithm.Error.invalidMinimumKeySize
     }

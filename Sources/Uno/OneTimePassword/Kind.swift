@@ -19,7 +19,7 @@ public extension OneTimePassword {
     }
     
     /// An OTP generated from a counter-based generator (HOTP).
-    case counterBased(counter: Int)
+    case counterBased(counter: UInt64)
     
     /// An OTP generated from a time-based generator (TOTP).
     case timeBased(timestep: TimeInterval)

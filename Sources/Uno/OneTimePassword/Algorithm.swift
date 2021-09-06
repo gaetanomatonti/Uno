@@ -10,6 +10,8 @@ import CryptoKit
 import Crypto
 #endif
 
+import Foundation
+
 public extension OneTimePassword {
   /// The hash function used to generate the HMAC.
   enum Algorithm: String {
@@ -55,8 +57,15 @@ extension OneTimePassword.Algorithm {
 
 public extension OneTimePassword.Algorithm {
   /// The possible errors regarding the hash functions.
-  enum Error: Swift.Error {
+  enum Error: Swift.Error, LocalizedError {
     /// The minimum size of the symmetric key does not match the requirement.
     case invalidMinimumKeySize
+    
+    public var errorDescription: String? {
+      switch self {
+        case .invalidMinimumKeySize:
+          return "The minimum size of the symmetric key does not match the requirement."
+      }
+    }
   }
 }

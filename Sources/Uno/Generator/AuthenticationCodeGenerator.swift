@@ -12,24 +12,8 @@ public protocol AuthenticationCodeGenerator {
   var secret: OneTimePassword.Secret { get }
   
   /// The amount of digits composing the authentication code.
-  var codeLength: Int { get }
+  var codeLength: OneTimePassword.Length { get }
   
   /// The hash function used to generate the authentication code's hash.
   var algorithm: OneTimePassword.Algorithm { get }
-}
-
-// MARK: - Helper Functions
-
-public extension AuthenticationCodeGenerator {
-  /// The range describing the supported length of the authentication code.
-  /// - Note: As required by [RFC-4226](https://datatracker.ietf.org/doc/html/rfc4226)
-  /// an authentication code should have a minimum length of 6 and a maximum of 8 digits.
-  static var supportedCodeLengthRange: ClosedRange<Int> {
-    6...8
-  }
-  
-  /// Whether the specified length of the code is valid.
-  var isCodeLengthValid: Bool {
-    Self.supportedCodeLengthRange.contains(codeLength)
-  }
 }
