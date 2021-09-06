@@ -17,13 +17,15 @@ let package = Package(
     ),
   ],
   dependencies: [
-    .package(url: "https://github.com/apple/swift-crypto.git", from: "1.1.0"),
+    .package(url: "https://github.com/apple/swift-crypto.git", .upToNextMajor(from: "1.1.0")),
+    .package(url: "https://github.com/gaetanomatonti/FiveBits.git", .upToNextMajor(from: "0.1.0"))
   ],
   targets: [
     .target(
       name: "Uno",
       dependencies: [
-        .product(name: "Crypto", package: "swift-crypto")
+        .product(name: "Crypto", package: "swift-crypto"),
+        .product(name: "FiveBits", package: "FiveBits")
       ]
     ),
     .testTarget(
