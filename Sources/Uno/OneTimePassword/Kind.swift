@@ -25,3 +25,18 @@ public extension OneTimePassword {
     case timeBased(timestep: TimeInterval)
   }
 }
+
+extension OneTimePassword.Kind: Equatable {
+  public static func ==(lhs: OneTimePassword.Kind, rhs: OneTimePassword.Kind) -> Bool {
+    switch (lhs, rhs) {
+      case let (.counterBased(lhsCounter), .counterBased(rhsCounter)):
+        return lhsCounter == rhsCounter
+        
+      case let (.timeBased(lhsTimestep), .timeBased(rhsTimestep)):
+        return lhsTimestep == rhsTimestep
+        
+      case (_, _):
+        return false
+    }
+  }
+}

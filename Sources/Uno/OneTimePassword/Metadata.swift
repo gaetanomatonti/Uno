@@ -13,7 +13,7 @@ public extension OneTimePassword {
     let secret: Secret
     
     /// The amount of digits composing the authentication code.
-    let codeLength: Int
+    let codeLength: Length
     
     /// The hash function used to generate the authentication code's hash.
     let algorithm: Algorithm
@@ -29,7 +29,7 @@ public extension OneTimePassword {
     ///   - codeLength: The amount of digits composing the authentication code.
     ///   - algorithm: The hash function used to generate the authentication code's hash.
     ///   - kind: The kind of One Time Password.
-    public init(secret: Secret, codeLength: Int, algorithm: Algorithm, kind: Kind) {
+    public init(secret: Secret, codeLength: Length, algorithm: Algorithm, kind: Kind) {
       self.secret = secret
       self.codeLength = codeLength
       self.algorithm = algorithm
@@ -42,7 +42,7 @@ public extension OneTimePassword {
       let parser = try URIParser(uri: uri)
       
       secret = parser.secret
-      codeLength = parser.digitsCount
+      codeLength = parser.codeLength
       algorithm = parser.algorithm
       kind = parser.kind
     }
