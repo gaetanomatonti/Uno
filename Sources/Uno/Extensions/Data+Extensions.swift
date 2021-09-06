@@ -85,8 +85,15 @@ extension Data {
 
 extension Data {
   /// The possible errors regarding the `Data` type.
-  enum Error: Swift.Error {
+  enum Error: Swift.Error, LocalizedError {
     /// The count of the converted bytes doesn't match the expected byte count.
     case bytesCountMismatch
+    
+    var errorDescription: String? {
+      switch self {
+        case .bytesCountMismatch:
+          return "The count of the converted bytes doesn't match the expected byte count."
+      }
+    }
   }
 }

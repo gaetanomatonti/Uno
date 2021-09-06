@@ -14,14 +14,6 @@ import Foundation
 
 /// A type that represents a Time-based one-time password.
 public struct TimeBasedGenerator: AuthenticationCodeGenerator {
-  /// The possible errors thrown in the `TimeBasedGenerator`.
-  public enum Error: Swift.Error {
-    /// The provided timestep is not valid.
-    case timestepInvalid
-    
-    /// The time for counter computation is invalid.
-    case timeInvalid
-  }
 
   // MARK: - Stored Properties
   
@@ -68,7 +60,7 @@ extension TimeBasedGenerator {
   /// - Returns: A `String` representing the generated one-time password.
   public func generate(from secondsSince1970: TimeInterval) throws -> String {
     guard secondsSince1970 >= 0 else {
-      throw Error.timeInvalid
+      throw Error.invalidTime
     }
     
     let counterFromSeconds = try counter(from: secondsSince1970)
@@ -80,12 +72,35 @@ extension TimeBasedGenerator {
   /// - Returns: A `UInt64` representing the counter factor for HOTP generation.
   func counter(from secondsSince1970: TimeInterval) throws -> UInt64 {
     guard timestep >= 0 else {
-      throw Error.timestepInvalid
+      throw Error.invalidTimestep
     }
     
     // Round down and remove the fractional part.
     let secondsSince1970 = floor(secondsSince1970)
     let counter = floor(secondsSince1970 / timestep)
     return UInt64(counter)
+  }
+}
+
+// MARK: - Errors
+
+public extension TimeBasedGenerator {
+  /// The possible errors thrown in the `TimeBasedGenerator`.
+  enum Error: Swift.Error, LocalizedError {
+    /// The provided timestep for OTP generation is not valid.
+    case invalidTimestep
+    
+    /// The time for counter computation is invalid.
+    case invalidTime
+    
+    public var errorDescription: String? {
+      switch self {
+        case .invalidTimestep:
+          return "The provided timestep for OTP generation is not valid."
+          
+        case .invalidTime:
+          return "The time for counter computation is invalid."
+      }
+    }
   }
 }

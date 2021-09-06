@@ -4,6 +4,8 @@
 //  Created by Gaetano Matonti on 06/09/21.
 //
 
+import Foundation
+
 public extension OneTimePassword {
   /// The possible OTP codes length expressed in digits.
   enum Length {
@@ -64,11 +66,21 @@ extension OneTimePassword.Length {
 
 public extension OneTimePassword.Length {
   /// The possible errors of `Length`.
-  enum Error: Swift.Error {
+  enum Error: Swift.Error, LocalizedError {
     /// The code length is not supported.
     case codeLengthNotSupported
     
     /// The code length is not valid and does not meet the specifications' requirements.
     case invalidCodeLength
+    
+    public var errorDescription: String? {
+      switch self {
+        case .codeLengthNotSupported:
+          return "The code length is not supported."
+          
+        case .invalidCodeLength:
+          return "The code length is not valid and does not meet the specifications' requirements."
+      }
+    }
   }
 }
