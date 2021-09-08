@@ -20,8 +20,8 @@ public extension OneTimePassword {
     
     // MARK: - Computed Properties
     
-    /// The value representing the number of digits of the OTP code..
-    var value: Int {
+    /// The value representing the number of digits of the OTP code.
+    var rawValue: Int {
       switch self {
         case .six:
           return 6
@@ -42,8 +42,8 @@ extension OneTimePassword.Length {
   /// Gets the `Length` of an OTP from its integer value.
   /// - Parameter value: The `Int` value of the OTP's length in digits.
   /// - Returns: The `Length` representing the number of digits forming the OTP code.
-  static func from(_ value: Int) throws -> OneTimePassword.Length {
-    switch value {
+  static func from(_ rawValue: Int) throws -> OneTimePassword.Length {
+    switch rawValue {
       case 6:
         return .six
         

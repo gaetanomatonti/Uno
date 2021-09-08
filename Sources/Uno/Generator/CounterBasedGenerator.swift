@@ -45,7 +45,7 @@ extension CounterBasedGenerator {
   /// - Returns: A `String` representing the generated one-time password.
   public func generate(from counter: UInt64) throws -> String {
     let hmac = try generateHMAC(from: counter)
-    let code = hmac.dynamicallyTrimmed(numberOfDigits: codeLength.value)
+    let code = hmac.dynamicallyTrimmed(numberOfDigits: codeLength.rawValue)
     return code
   }
   
