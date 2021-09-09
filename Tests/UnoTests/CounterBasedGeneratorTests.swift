@@ -15,7 +15,7 @@ final class CounterBasedGeneratorTests: XCTestCase {
   // MARK: - Stored Properties
   
   /// The secret to use for tests.
-  private var secret: Secret!
+  private var secret: OneTimePassword.Secret!
   
   /// The `CounterBasedGenerator` under test.
   private var sut: CounterBasedGenerator!
@@ -23,16 +23,11 @@ final class CounterBasedGeneratorTests: XCTestCase {
   // MARK: - Test Case Functions
   
   override func setUpWithError() throws {
-    secret = try Secret(ascii: "12345678901234567890")
+    secret = try OneTimePassword.Secret(ascii: "12345678901234567890")
     sut = CounterBasedGenerator(secret: secret)
   }
   
   // MARK: - Tests
-  
-  func testCodeGenerationShouldThrow() {
-    let hotp = CounterBasedGenerator(secret: secret, codeLength: 4)
-    XCTAssertThrowsError(try hotp.generate(from: 0))
-  }
   
   func testGeneratedHashesShouldBeCorrect() throws {
     let testHashes = [
