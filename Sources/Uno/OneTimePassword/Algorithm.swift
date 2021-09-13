@@ -46,6 +46,8 @@ public extension OneTimePassword {
 
 extension OneTimePassword.Algorithm {
   /// Gets the `Algorithm` from its name.
+  ///
+  /// - Note: If no algorithm could be found for the specified `String`, the default SHA1 algorithm will be used.
   /// - Parameter value: The `String` value of the algorithm's name.
   /// - Returns: A `Algorithm` used to generate the OTP.
   static func from(_ value: String) -> OneTimePassword.Algorithm {
