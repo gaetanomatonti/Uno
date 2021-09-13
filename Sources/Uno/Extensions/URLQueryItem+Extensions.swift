@@ -9,6 +9,7 @@ import Foundation
 extension Array where Element == URLQueryItem {
   /// Accesses the value of the `URLQueryItem` for the specified `URIParser.ItemKey`.
   /// - Parameter key: The `URIParser.ItemKey` representing the name of the `URLQueryItem`.
+  /// - Returns: An optional `String` representing the value of the query item. `nil` if a value couldn't be found for the specified key.
   subscript(_ key: URIParser.ItemKey) -> String? {
     value(for: key)
   }
