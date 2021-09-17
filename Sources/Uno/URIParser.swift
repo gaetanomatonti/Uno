@@ -137,6 +137,11 @@ extension URIParser {
     }
   }
   
+  /// Gets the issuer and account from the path of the URI.
+  ///
+  /// - Note: The correct format of the label should be `issuer:account`.
+  /// - Parameter label: The label from which to extract the issuer and account strings.
+  /// - Returns: A tuple of `String`s containing the issuer and account.
   static func extractLabelItems(from label: String) -> (issuer: String?, account: String?) {
     var label = label
     
