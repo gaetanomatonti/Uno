@@ -61,6 +61,18 @@ final class URIParserTests: XCTestCase {
     let parser = try URIParser(uri: sut)
     XCTAssertEqual(parser.kind, .timeBased(timestep: 30))
   }
+  
+  func testIssuerShouldBeCorrect() throws {
+    let sut = "otpauth://totp/Uno:john.doe@email.com?issuer=Uno&secret=JBSWY3DPEHPK3PXP&period=30"
+    let parser = try URIParser(uri: sut)
+    XCTAssertEqual(parser.issuer, "Uno")
+  }
+  
+  func testAccountShouldBeCorrect() throws {
+    let sut = "otpauth://totp/Uno:john.doe@email.com?issuer=Uno&secret=JBSWY3DPEHPK3PXP&period=30"
+    let parser = try URIParser(uri: sut)
+    XCTAssertEqual(parser.account, "john.doe@email.com")
+  }
     
   func testSecretShouldBeCorrect() throws {
     let sut = "otpauth://totp/Uno:john.doe@email.com?issuer=Uno&secret=JBSWY3DPEHPK3PXP&period=30"
