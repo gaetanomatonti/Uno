@@ -110,14 +110,14 @@ extension URIParser {
     switch kindKey {
       case .hotp:
         guard let counterValue = items[.counter], let counter = UInt64(counterValue) else {
-          throw Error.missingCounter
+          return .defaultCounterBased
         }
         
         return .counterBased(counter: counter)
         
       case .totp:
         guard let periodValue = items[.period], let period = TimeInterval(periodValue) else {
-          throw Error.missingPeriod
+          return .defaultTimeBased
         }
         
         return .timeBased(timestep: period)
@@ -172,11 +172,5 @@ extension URIParser {
     
     /// The URI query items are missing the secret string.
     case missingSecret
-    
-    /// The URI query items are missing the counter value. Counter is required for counter based generators, which generate HOTPs.
-    case missingCounter
-  
-    /// The URI query items are missing the period value. Period is required for time based generators, which generate TOTPs.
-    case missingPeriod
   }
 }

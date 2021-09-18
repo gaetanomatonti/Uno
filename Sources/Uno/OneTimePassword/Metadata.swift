@@ -10,16 +10,16 @@ public extension OneTimePassword {
   /// An object containing the information necessary to generate an OTP to authenticate to a service.
   struct Metadata {    
     /// The secret to seed into the generator.
-    let secret: Secret
+    public let secret: Secret
     
     /// The amount of digits composing the authentication code.
-    let codeLength: Length
+    public let codeLength: Length
     
     /// The hash function used to generate the authentication code's hash.
-    let algorithm: Algorithm
+    public let algorithm: Algorithm
     
     /// The kind of One Time Password.
-    let kind: Kind
+    public let kind: Kind
     
     // MARK: - Init
     

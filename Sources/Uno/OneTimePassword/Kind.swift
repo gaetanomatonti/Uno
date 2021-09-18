@@ -23,6 +23,14 @@ public extension OneTimePassword {
     
     /// An OTP generated from a time-based generator (TOTP).
     case timeBased(timestep: TimeInterval)
+    
+    // MARK: - Constants
+    
+    /// The default kind for counter-based generators.
+    static let defaultCounterBased: Self = .counterBased(counter: 0)
+    
+    /// The default kind for time-based generators.
+    static let defaultTimeBased: Self = .timeBased(timestep: 30)
   }
 }
 
