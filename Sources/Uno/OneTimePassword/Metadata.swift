@@ -8,7 +8,10 @@ import Foundation
 
 public extension OneTimePassword {
   /// An object containing the information necessary to generate an OTP to authenticate to a service.
-  struct Metadata {
+  struct Metadata: Identifiable {
+    /// The identifier of the `Metadata` object.
+    public let id = UUID()
+    
     /// The issuer of the service authenticated through the OTP.
     public let issuer: String?
     
