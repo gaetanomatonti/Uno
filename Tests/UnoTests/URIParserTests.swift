@@ -36,18 +36,16 @@ final class URIParserTests: XCTestCase {
     }
   }
   
-  func testMissingPeriodShouldThrow() {
-    let sut = "otpauth://totp/Uno:john.doe@email.com?issuer=Uno"
-    XCTAssertThrowsError(try URIParser(uri: sut)) { error in
-      XCTAssertEqual(error as! URIParser.Error, URIParser.Error.missingPeriod)
-    }
+  func testMissingPeriodShouldParseWithDefaultValue() throws {
+    let sut = "otpauth://totp/Uno:john.doe@email.com?secret=JBSWY3DPEHPK3PXP&issuer=Uno"
+    let parser = try URIParser(uri: sut)
+    XCTAssertEqual(parser.kind, .defaultTimeBased)
   }
   
-  func testMissingCounterShouldThrow() {
-    let sut = "otpauth://hotp/Uno:john.doe@email.com?issuer=Uno"
-    XCTAssertThrowsError(try URIParser(uri: sut)) { error in
-      XCTAssertEqual(error as! URIParser.Error, URIParser.Error.missingCounter)
-    }
+  func testMissingCounterShouldParseWithDefaultValue() throws {
+    let sut = "otpauth://hotp/Uno:john.doe@email.com?secret=JBSWY3DPEHPK3PXP&issuer=Uno"
+    let parser = try URIParser(uri: sut)
+    XCTAssertEqual(parser.kind, .defaultCounterBased)
   }
   
   func testHOTPTypeShouldBeCorrect() throws {
