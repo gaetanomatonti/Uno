@@ -18,6 +18,9 @@ struct URIParser {
 
     /// The digits item key.
     case digits
+    
+    /// The issuer item key
+    case issuer
 
     /// The period item key.
     case period
@@ -33,6 +36,12 @@ struct URIParser {
   
   // MARK: - Stored Properties
   
+  /// The issuer of the service authenticated through the OTP.
+  let issuer: String?
+  
+  /// The account secured with the OTP authentication.
+  let account: String?
+
   /// The algorithm used by the service to generate OTPs.
   let algorithm: OneTimePassword.Algorithm
   
@@ -81,6 +90,10 @@ struct URIParser {
     // The following values are optional and have fallback values.
     self.algorithm = URIParser.algorithm(for: queryItems[.algorithm])
     self.codeLength = try URIParser.codeLength(for: queryItems[.digits])
+    
+    let (issuer, account) = Self.extractLabelItems(from: components.path)
+    self.issuer = issuer ?? queryItems[.issuer]
+    self.account = account
   }
 }
 
@@ -122,6 +135,27 @@ extension URIParser {
         
         return .timeBased(timestep: period)
     }
+  }
+  
+  /// Gets the issuer and account from the path of the URI.
+  ///
+  /// - Note: The correct format of the label should be `issuer:account`.
+  /// - Parameter label: The label from which to extract the issuer and account strings.
+  /// - Returns: A tuple of `String`s containing the issuer and account.
+  static func extractLabelItems(from label: String) -> (issuer: String?, account: String?) {
+    var label = label
+    
+    if label.hasPrefix("/") {
+      label.removeFirst()
+    }
+    
+    let components = label.components(separatedBy: ":")
+    
+    guard components.count == 2 else {
+      return (nil, nil)
+    }
+    
+    return (components.first, components.last)
   }
   
   /// Gets the algorithm to use to generate the OTP.
