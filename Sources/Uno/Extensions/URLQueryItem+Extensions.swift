@@ -20,6 +20,7 @@ extension Array where Element == URLQueryItem {
   
   // MARK: - Computed Properties
   
+  /// The items sorted by their names in ascending order.
   var sorted: Self {
     sorted(by: { $0.name < $1.name })
   }
