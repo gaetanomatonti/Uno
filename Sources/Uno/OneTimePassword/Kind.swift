@@ -34,6 +34,7 @@ public extension OneTimePassword {
     
     // MARK: - Computed Properties
     
+    /// The key of the OTP kind.
     var key: Key {
       switch self {
         case .counterBased:
@@ -44,6 +45,7 @@ public extension OneTimePassword {
       }
     }
     
+    /// The value of the counter. `nil` if the kind is not `.counterBased`.
     var counter: UInt64? {
       if case let .counterBased(counter) = self {
         return counter
@@ -52,7 +54,8 @@ public extension OneTimePassword {
       return nil
     }
     
-    var period: TimeInterval? {
+    /// The value of the timestep. `nil` if the kind is not `.timeBased`.
+    var timestep: TimeInterval? {
       if case let .timeBased(timestep) = self {
         return timestep
       }

@@ -7,6 +7,7 @@
 import XCTest
 @testable import Uno
 
+/// Test case for the `OneTimePassword.Metadata` type.
 final class MetadataTests: XCTestCase {
   func testURIShouldBeCorrect() throws {
     let metadata = try OneTimePassword.Metadata(

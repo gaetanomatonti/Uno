@@ -32,6 +32,7 @@ public extension OneTimePassword {
     
     // MARK: - Computed Properties
     
+    /// The `otpauth` `URI` containing information for the service authentication.
     var uri: URL? {
       var components = URLComponents()
       components.scheme = URIParser.scheme
@@ -50,7 +51,7 @@ public extension OneTimePassword {
         components.queryItems?.append(URLQueryItem(.issuer, value: issuer))
       }
       
-      if let period = kind.period {
+      if let period = kind.timestep {
         components.queryItems?.append(URLQueryItem(.period, value: Int(period).description))
       }
       

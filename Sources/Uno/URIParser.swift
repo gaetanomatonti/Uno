@@ -166,7 +166,7 @@ extension URIParser {
       return .sha1
     }
     
-    return OneTimePassword.Algorithm.from(value)
+    return OneTimePassword.Algorithm.from(value.uppercased())
   }
   
   /// Gets the length in digits of the OTP that should be generated.

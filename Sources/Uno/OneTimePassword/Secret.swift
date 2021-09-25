@@ -19,6 +19,7 @@ public extension OneTimePassword {
     
     // MARK: - Stored Properties
     
+    /// The secret in `String` format.
     let string: String
     
     /// The bytes of the secret.

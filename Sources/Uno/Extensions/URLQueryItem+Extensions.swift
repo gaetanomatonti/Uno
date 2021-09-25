@@ -7,6 +7,10 @@
 import Foundation
 
 extension URLQueryItem {
+  /// Creates an instance of `URLQueryItem`.
+  /// - Parameters:
+  ///   - key: The `URIParser.ItemKey` representing the name of the query item.
+  ///   - value: The value of the query item.
   init(_ key: URIParser.ItemKey, value: String?) {
     self.init(name: key.rawValue, value: value)
   }
