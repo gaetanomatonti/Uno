@@ -31,6 +31,34 @@ public extension OneTimePassword {
     
     /// The default kind for time-based generators.
     static let defaultTimeBased: Self = .timeBased(timestep: 30)
+    
+    // MARK: - Computed Properties
+    
+    var key: Key {
+      switch self {
+        case .counterBased:
+          return .hotp
+          
+        case .timeBased:
+          return .totp
+      }
+    }
+    
+    var counter: UInt64? {
+      if case let .counterBased(counter) = self {
+        return counter
+      }
+      
+      return nil
+    }
+    
+    var period: TimeInterval? {
+      if case let .timeBased(timestep) = self {
+        return timestep
+      }
+      
+      return nil
+    }
   }
 }
 

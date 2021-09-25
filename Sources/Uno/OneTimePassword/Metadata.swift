@@ -30,6 +30,37 @@ public extension OneTimePassword {
     /// The kind of One Time Password.
     public let kind: Kind
     
+    // MARK: - Computed Properties
+    
+    var uri: URL? {
+      var components = URLComponents()
+      components.scheme = URIParser.scheme
+      components.host = kind.key.rawValue
+      
+      let label = [issuer, account].compactMap { $0 }.joined(separator: ":")
+      components.path = label.isEmpty ? "" : ("/" + label)
+      
+      components.queryItems = [
+        URLQueryItem(.algorithm, value: algorithm.rawValue),
+        URLQueryItem(.digits, value: codeLength.rawValue.description),
+        URLQueryItem(.secret, value: secret.string)
+      ]
+      
+      if let issuer = issuer {
+        components.queryItems?.append(URLQueryItem(.issuer, value: issuer))
+      }
+      
+      if let period = kind.period {
+        components.queryItems?.append(URLQueryItem(.period, value: Int(period).description))
+      }
+      
+      if let counter = kind.counter {
+        components.queryItems?.append(URLQueryItem(.counter, value: counter.description))
+      }
+      
+      return components.url
+    }
+    
     // MARK: - Init
     
     /// Creates an instance of the `Metadata` object.

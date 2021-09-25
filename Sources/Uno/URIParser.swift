@@ -32,7 +32,7 @@ struct URIParser {
   // MARK: - Constants
   
   /// The scheme of the `otpauth` URI.
-  private static let scheme = "otpauth"
+  internal static let scheme = "otpauth"
   
   // MARK: - Stored Properties
   
