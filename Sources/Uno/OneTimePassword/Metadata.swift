@@ -33,7 +33,7 @@ public extension OneTimePassword {
     // MARK: - Computed Properties
     
     /// The `otpauth` `URI` containing information for the service authentication.
-    var uri: URL? {
+    public var uri: URL? {
       var components = URLComponents()
       components.scheme = URIParser.scheme
       components.host = kind.key.rawValue
