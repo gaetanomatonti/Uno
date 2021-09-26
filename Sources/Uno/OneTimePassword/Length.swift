@@ -21,7 +21,7 @@ public extension OneTimePassword {
     // MARK: - Computed Properties
     
     /// The value representing the number of digits of the OTP code.
-    var rawValue: Int {
+    public var rawValue: Int {
       switch self {
         case .six:
           return 6
