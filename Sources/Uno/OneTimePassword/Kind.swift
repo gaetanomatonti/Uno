@@ -6,11 +6,11 @@
 
 import Foundation
 
-public extension OneTimePassword {
+extension OneTimePassword {
   /// The supported types of One Time Passwords.
-  enum Kind {
+  public enum Kind {
     /// The key of the OTP type.
-    enum Key: String {
+    public enum Key: String {
       /// The key for the HOTP.
       case hotp
       
@@ -41,7 +41,7 @@ public extension OneTimePassword {
     // MARK: - Computed Properties
     
     /// The key of the OTP kind.
-    var key: Key {
+    public var key: Key {
       switch self {
         case .counterBased:
           return .hotp
@@ -71,6 +71,38 @@ public extension OneTimePassword {
   }
 }
 
+// MARK: - Helper Functions
+
+extension OneTimePassword.Kind {
+  /// Creates an instance of `Kind` from a raw string, timestep and counter parameters.
+  /// - Parameters:
+  ///   - string: The raw string representing the `Kind.Key`.
+  ///   - timestep: The timestep for the time-based generator. `nil` if the kind should not be time based.
+  ///   - counter: The counter for the counter-based generator. `nil` if the kind should not be counter based.
+  /// - Returns: The `Kind` of the generator.
+  public static func from(_ string: String, timestep: TimeInterval? = nil, counter: UInt64? = nil) throws -> OneTimePassword.Kind {
+    guard let key = Key(rawValue: string) else {
+      throw Error.invalidKey
+    }
+    
+    switch key {
+      case .hotp:
+        guard let counter = counter else {
+          throw Error.missingCounter
+        }
+        
+        return .counterBased(counter: counter)
+        
+      case .totp:
+        guard let timestep = timestep else {
+          throw Error.missingTimestep
+        }
+        
+        return .timeBased(timestep: timestep)
+    }
+  }
+}
+
 extension OneTimePassword.Kind: Equatable {
   public static func ==(lhs: OneTimePassword.Kind, rhs: OneTimePassword.Kind) -> Bool {
     switch (lhs, rhs) {
@@ -83,5 +115,21 @@ extension OneTimePassword.Kind: Equatable {
       case (_, _):
         return false
     }
+  }
+}
+
+// MARK: - Error
+
+extension OneTimePassword.Kind {
+  /// The possible errors for the `Kind` type.
+  enum Error: Swift.Error {
+    /// The provideded kind key is invalid.
+    case invalidKey
+    
+    /// The counter is missing for the counter-based kind.
+    case missingCounter
+    
+    /// The timestep is missing for the time-based kind.
+    case missingTimestep
   }
 }
