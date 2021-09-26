@@ -32,7 +32,7 @@ struct URIParser {
   // MARK: - Constants
   
   /// The scheme of the `otpauth` URI.
-  private static let scheme = "otpauth"
+  internal static let scheme = "otpauth"
   
   // MARK: - Stored Properties
   
@@ -166,7 +166,7 @@ extension URIParser {
       return .sha1
     }
     
-    return OneTimePassword.Algorithm.from(value)
+    return OneTimePassword.Algorithm.from(value.uppercased())
   }
   
   /// Gets the length in digits of the OTP that should be generated.

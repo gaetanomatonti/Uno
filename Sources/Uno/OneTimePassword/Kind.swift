@@ -26,11 +26,48 @@ public extension OneTimePassword {
     
     // MARK: - Constants
     
+    /// The default counter value for counter-based generators.
+    public static let defaultCounter: UInt64 = 0
+    
     /// The default kind for counter-based generators.
-    static let defaultCounterBased: Self = .counterBased(counter: 0)
+    public static let defaultCounterBased: Self = .counterBased(counter: defaultCounter)
+    
+    /// The default timestep value for time-based generators.
+    public static let defaultTimestep: TimeInterval = 30
     
     /// The default kind for time-based generators.
-    static let defaultTimeBased: Self = .timeBased(timestep: 30)
+    public static let defaultTimeBased: Self = .timeBased(timestep: defaultTimestep)
+    
+    // MARK: - Computed Properties
+    
+    /// The key of the OTP kind.
+    var key: Key {
+      switch self {
+        case .counterBased:
+          return .hotp
+          
+        case .timeBased:
+          return .totp
+      }
+    }
+    
+    /// The value of the counter. `nil` if the kind is not `.counterBased`.
+    public var counter: UInt64? {
+      if case let .counterBased(counter) = self {
+        return counter
+      }
+      
+      return nil
+    }
+    
+    /// The value of the timestep. `nil` if the kind is not `.timeBased`.
+    public var timestep: TimeInterval? {
+      if case let .timeBased(timestep) = self {
+        return timestep
+      }
+      
+      return nil
+    }
   }
 }
 

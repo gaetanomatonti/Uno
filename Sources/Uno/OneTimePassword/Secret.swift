@@ -19,6 +19,9 @@ public extension OneTimePassword {
     
     // MARK: - Stored Properties
     
+    /// The secret in `String` format.
+    let string: String
+    
     /// The bytes of the secret.
     let data: Data
     
@@ -38,6 +41,7 @@ public extension OneTimePassword {
         throw Error.asciiConversionToDataFailed
       }
       
+      self.string = string
       self.data = data
     }
     
@@ -48,12 +52,14 @@ public extension OneTimePassword {
         throw Error.base32DecodingFailed
       }
       
+      self.string = base32String
       self.data = data
     }
     
     /// Creates an instance of `Secret` from an ASCII encoded String.
     /// - Parameter string: The hexadecimal `String` representation of the secret.
     public init(hex string: String) throws {
+      self.string = string
       self.data = try Data(hex: string)
     }
   }
