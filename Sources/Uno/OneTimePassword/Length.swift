@@ -42,7 +42,7 @@ extension OneTimePassword.Length {
   /// Gets the `Length` of an OTP from its integer value.
   /// - Parameter value: The `Int` value of the OTP's length in digits.
   /// - Returns: The `Length` representing the number of digits forming the OTP code.
-  static func from(_ rawValue: Int) throws -> OneTimePassword.Length {
+  public static func from(_ rawValue: Int) throws -> OneTimePassword.Length {
     switch rawValue {
       case 6:
         return .six
