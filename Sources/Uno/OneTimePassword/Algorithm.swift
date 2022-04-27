@@ -30,7 +30,7 @@ public extension OneTimePassword {
     var minimumKeySize: Int {
       switch self {
         case .sha1:
-          return 20
+          return 10
           
         case .sha256:
           return 32
